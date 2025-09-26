@@ -1,0 +1,13 @@
+# Ambiente virtual
+venv/
+
+# Arquivos do Django
+db.sqlite3
+__pycache__/
+
+# Arquivos do sistema
+*.pyc
+*.log
+
+# Configurações locais
+.env
