@@ -27,6 +27,8 @@ git commit -m "escreva aqui as alterações desse commit"
 git remote add origin URL_DO_GIT
 git push -u origin main
 
+```
+
 Migrando a base de dados do Django
 
 ```
@@ -40,6 +42,5 @@ Criando e modificando a senha de um super usuário Django
 ```
 python manage.py createsuperuser
 python manage.py changepassword USERNAME
-
 
 ```
