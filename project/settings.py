@@ -122,6 +122,12 @@ STATICFILES_DIRS = [
     BASE_DIR / 'base_static'  # Global static files directory
 ]
 
+STATIC_ROOT = BASE_DIR / 'static'  # Directory where static files will be collected 
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # Directory where media files will be stored
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
