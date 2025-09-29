@@ -10,3 +10,8 @@ class ContactAdmin(admin.ModelAdmin):
    search_fields = 'id', 'first_name', 'last_name', 'email', 'phone' #busca por esses campos
    list_max_show_all = 50 #limita a quantidade de contatos mostrados na lista
    list_editable = 'email','phone' #permite editar esses campos diretamente na lista de contatos
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+   list_display = 'name', #mostra essas colunas na lista de categorias
+   ordering = '-id', #ordena por id
