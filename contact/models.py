@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -25,12 +26,16 @@ class Contact(models.Model): # herdando de models.Model
     category = models.ForeignKey(
         Category, 
         on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True
+        null=True, blank=True
     )  # chave estrangeira para a categoria, opcional
     #on delete serve para definir o que acontece quando a categoria é deletada
     # SET_NULL: define o campo como NULL, ou seja, quando apagar a categoria, o campo category do contato vira NULL
-    # CASCADE: deleta o contato junto com a categoria
+    # CASCADE: deleta o contato junto com a categoria, deleta TUDO, CUIDADO
+    owner = models.ForeignKey(
+        User, 
+        on_delete=models.SET_NULL, 
+        null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}" # o que eu vou ver 
