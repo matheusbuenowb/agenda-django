@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from contact.models import Contact
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 def index(request):
 
@@ -20,5 +22,32 @@ def index(request):
 
         request, 
         'contact/index.html',
+        context 
+    )
+
+
+def contact(request, contact_id):
+
+    #duas formas de pegar um contato específico
+
+    #single_contact = Contact.objects.filter(pk = contact_id).first()
+
+    '''if single_contact is None:
+        raise Http404()
+'''
+    single_contact = get_object_or_404(
+        Contact, pk = contact_id, show = True#aqui simplifica o código acima
+    )
+
+    #single foi só para nao conflitar com o def contact
+
+    context = {
+        'contact': single_contact,
+    }
+
+    return render(
+
+        request, 
+        'contact/contact.html',
         context 
     )
