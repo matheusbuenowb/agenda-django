@@ -5,11 +5,11 @@ from contact import models
 
 @admin.register(models.Contact)
 class ContactAdmin(admin.ModelAdmin):
-   list_display = 'first_name', 'last_name', 'email', 'phone', 'created_at' #mostra essas colunas na lista de contatos
+   list_display = 'first_name', 'last_name', 'email', 'phone', 'created_at', 'show' #mostra essas colunas na lista de contatos
    ordering = 'id', #ordena por id
    search_fields = 'id', 'first_name', 'last_name', 'email', 'phone' #busca por esses campos
    list_max_show_all = 50 #limita a quantidade de contatos mostrados na lista
-   list_editable = 'email','phone' #permite editar esses campos diretamente na lista de contatos
+   list_editable = 'email','phone', 'show' #permite editar esses campos diretamente na lista de contatos
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
