@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from contact.models import Contact
 from django.http import Http404
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 def index(request):
 
@@ -55,5 +56,42 @@ def contact(request, contact_id):
 
         request, 
         'contact/contact.html',
+        context 
+    )
+
+
+def search(request):
+
+    search_value = request.GET.get('q', '').strip() #pega o valor do input name = q do form e o strip tira espaços em branco
+    print(search_value)
+
+    if search_value == '':
+        return redirect('contact:index') #se o campo de busca estiver vazio, redireciona para a index
+
+    contacts = Contact.objects.filter(show = True).filter(
+        Q(first_name__icontains= search_value) |
+        Q(last_name__icontains= search_value) |
+        Q(phone__icontains= search_value) |
+        Q(email__icontains= search_value)
+        ).order_by('-id')
+    # com isso se eu digitar "jo" ele traz "João" e "joana", o icontains é case insensitive
+    #O Q envolvido serve como se fosse um OR (OU) entre os dois filtros
+    #é uma pesquisa basica do google, traz qualquer coisa que contenha o valor buscado
+    #mas é simples, se colocar nome + sobrenome nao traz nada, nem se colocar parte do nome e parte do sobrenome
+    #pois a lógica é OU, não E, teria que fazer separado e ficaria demasiado complexo
+    #ex: eu teria que separar o search_value em partes e fazer um Q para cada parte
+    
+    print(contacts.query) #mostra a query SQL gerada pelo Django no terminal, genial para debug
+
+
+    context = {
+        'contacts': contacts,
+        'site_title': 'Contatos - '
+    }
+
+    return render(
+
+        request, 
+        'contact/index.html',
         context 
     )
