@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{%if contacts%} 
+
 <div class = "responsive-table">
     <table class ="contacts-table">
         <caption class ="table-caption">Meus Contatos</caption>
@@ -44,5 +46,18 @@
             
     </table>
 </div>
+
+{% else %}
+
+<div class = "single-contact">
+
+    <h1 class ="single-contact-name">
+        Nenhum contato encontrado com o termo "{{search_value}}.
+    </h1>
+
+</div>
+
+
+{% endif %}
 
 {% endblock content %}

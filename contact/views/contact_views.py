@@ -86,7 +86,8 @@ def search(request):
 
     context = {
         'contacts': contacts,
-        'site_title': 'Contatos - '
+        'site_title': 'Search - ',
+        'search_value': search_value #remove os espaços em branco com o strip acima
     }
 
     return render(
