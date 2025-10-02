@@ -7,7 +7,13 @@ from django.core.paginator import Paginator
 
 def create(request):
 
-    context = {
+    if request.method == 'POST':
+        print(request.method)
+        search = request.POST.get('first_name')
+
+        print(search)
+
+    context = { 
 
     }
 
