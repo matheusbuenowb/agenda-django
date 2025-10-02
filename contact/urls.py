@@ -10,9 +10,9 @@ urlpatterns = [
     path('search/', views.search, name='search'), 
 
     #contact (CRUD)
-    path('contact/create/', views.contact, name='contact'), #parâmetro dinâmico [int:contact_id]
+    path('contact/create/', views.create, name='contact'), #parâmetro dinâmico [int:contact_id]
     path('contact/<int:contact_id>/detail/', views.contact, name='contact'), #READ
-    path('contact/<int:contact_id>/update/', views.contact, name='contact'), #UPDATE
-    path('contact/<int:contact_id>/delete/', views.contact, name='contact'), #DELETE
+    #path('contact/<int:contact_id>/update/', views.update, name='contact'), #UPDATE
+    #path('contact/<int:contact_id>/delete/', views.delete, name='contact'), #DELETE
 
 ]
