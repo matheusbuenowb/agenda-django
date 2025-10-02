@@ -3,10 +3,12 @@ from contact.models import Contact
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 def index(request):
 
-    contacts = Contact.objects.filter(show = True).order_by('-id')[10:20] #ordena do mais novo para o mais antigo
+    contacts = Contact.objects.filter(show = True).order_by('-id')
+    #[10:20] #ordena do mais novo para o mais antigo
     #orderna por id em ordem decrescente, por isso -id
     #filtro para mostrar apenas os contatos com show = True
     #o [0:10] limita a quantidade de contatos mostrados para 10, é um fatiamento de lista do Python
@@ -14,9 +16,15 @@ def index(request):
     
     print(contacts.query) #mostra a query SQL gerada pelo Django no terminal, genial para debug
 
+    
+    paginator = Paginator(contacts, 25)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+
 
     context = {
-        'contacts': contacts,
+        'page_obj': page_obj,
         'site_title': 'Contatos - '
     }
 
@@ -80,12 +88,18 @@ def search(request):
     #mas é simples, se colocar nome + sobrenome nao traz nada, nem se colocar parte do nome e parte do sobrenome
     #pois a lógica é OU, não E, teria que fazer separado e ficaria demasiado complexo
     #ex: eu teria que separar o search_value em partes e fazer um Q para cada parte
+
+
+    paginator = Paginator(contacts, 25)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     
     print(contacts.query) #mostra a query SQL gerada pelo Django no terminal, genial para debug
 
 
     context = {
-        'contacts': contacts,
+        'page_obj': page_obj,
         'site_title': 'Search - ',
         'search_value': search_value #remove os espaços em branco com o strip acima
     }
