@@ -42,11 +42,33 @@ class ContactForm(forms.ModelForm):
         
     def clean(self):
         cleaned_data = self.cleaned_data
+
+        first_name = self.cleaned_data.get('first_name')
+        last_name = self.cleaned_data.get('last_name')
         
-        self.add_error(
-            None, 
-            ValidationError(
-                'Erro de validação no campo first_name',
-                code = "invalid"
+        if first_name == last_name:       
+            msg = ValidationError(
+                    'O primeiro nome não pode ser igual ao último nome',
+                    code = "invalid"
             )
-        )
+            self.add_error('first_name', msg)
+            self.add_error('last_name', msg)
+
+        return super().clean()  
+
+    def clean_first_name(self):
+
+        cleaned_data = self.cleaned_data
+        first_name = self.cleaned_data.get('first_name')
+        last_name = self.cleaned_data.get('last_name')
+
+        if first_name == last_name:
+            self.add_error(
+                'first_name', 
+                ValidationError(
+                    'O primeiro nome não pode ser igual ao último nome',
+                    code = "invalid"
+                )
+            )
+        
+        return first_name
