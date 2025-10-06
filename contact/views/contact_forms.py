@@ -14,6 +14,17 @@ class ContactForm(forms.ModelForm):
             'first_name',
             'last_name',
             'phone',]
+        
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        
+        self.add_error(
+            None, 
+            forms.ValidationError(
+                'Erro de validação no campo first_name',
+                code = "invalid"
+            )
+        )
 
 def create(request):
 
