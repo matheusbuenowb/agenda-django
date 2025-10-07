@@ -13,6 +13,6 @@ urlpatterns = [
     path('contact/create/', views.create, name='create'), #parâmetro dinâmico [int:contact_id]
     path('contact/<int:contact_id>/detail/', views.contact, name='contact'), #READ
     path('contact/<int:contact_id>/update/', views.update, name='update'), #UPDATE
-    #path('contact/<int:contact_id>/delete/', views.delete, name='delete'), #DELETE
+    path('contact/<int:contact_id>/delete/', views.delete, name='delete'), #DELETE
 
 ]
