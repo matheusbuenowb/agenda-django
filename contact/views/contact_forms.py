@@ -11,7 +11,8 @@ def create(request):
     form_action = reverse('contact:create')
 
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request.FILES)
+        
         context = { 
             'form': form,
             'form_action': form_action  

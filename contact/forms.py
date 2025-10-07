@@ -3,8 +3,15 @@ from django.core.exceptions import ValidationError
 from . import models
 
 class ContactForm(forms.ModelForm):
+    picture = forms.ImageField(
+        widget = forms.FileInput(
+            attrs = {
+                'accept': 'image/*',
+            }
+        )
+    )
 
-    first_name = forms.CharField( #sobrescrevendo o campo first_name do modelo Contact  
+    '''first_name = forms.CharField( #sobrescrevendo o campo first_name do modelo Contact  
         widget = forms.TextInput(
             attrs = {
                 'class': 'classe-a classe-b',
@@ -21,7 +28,7 @@ class ContactForm(forms.ModelForm):
         self.fields['first_name'].widget.attrs.update({ #attrs é um dicionário
             'class': 'classe-a classe-b',
             'placeholder': 'Digite o primeiro nome',
-        })
+        })'''
     
     
     class Meta:
@@ -33,6 +40,7 @@ class ContactForm(forms.ModelForm):
             'email',
             'description',
             'category',
+            'picture'
         )
         widgets = {
             'first_name': forms.TextInput(
