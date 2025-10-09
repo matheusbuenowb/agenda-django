@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
+
 from . import models
 
 class ContactForm(forms.ModelForm):
@@ -110,9 +111,22 @@ class RegisterForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
+        current_email = self.instance.email
 
-        if models.User.objects.filter(email = email).exists():
-            self.add_error(
-                'email',
-                ValidationError('Já existe este email', code = 'invalid')
-            )
+
+        if current_email != email:
+            if models.User.objects.filter(email = email).exists():
+                self.add_error(
+                    'email',
+                    ValidationError('Já existe este email', code = 'invalid')
+                )
+
+class RegisterUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User()
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'username',
+        ]

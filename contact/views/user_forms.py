@@ -3,6 +3,9 @@ from contact.forms import RegisterForm
 from django.contrib import messages, auth
 from django.contrib.auth.forms import AuthenticationForm
 
+
+from contact.forms import RegisterForm, RegisterUpdateForm
+
 def register(request):
 
     form = RegisterForm()
@@ -56,3 +59,32 @@ def login_view(request):
 def logout_view(request):
     auth.logout(request)
     return redirect('contact:login')
+
+
+def user_update(request):
+
+    form = RegisterUpdateForm(instance=request.user)
+
+
+    if request.method != 'POST': #SE nao for POST eu retorno o form
+        return render(
+            request,
+            'contact/register.html',
+            {
+                'form': form
+            }
+        )
+    
+    form = RegisterUpdateForm(data =request.POST, instance=request.user)
+
+    if not form.is_valid():
+        return render(
+            request,
+            'contact/register.html',
+            {
+                'form': form
+            }
+        )
+    
+    form.save()
+    messages.success(request, 'Usuário atualizado com sucesso')
