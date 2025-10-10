@@ -6,7 +6,9 @@ from django.core.paginator import Paginator
 from django import forms
 from contact.forms import ContactForm
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='contact:login') # isso redireciona para o login se nao estiver logado
 def create(request):
     form_action = reverse('contact:create')
 
@@ -40,7 +42,7 @@ def create(request):
         context 
     )
 
-
+@login_required(login_url='contact:login') # isso redireciona para o login se nao estiver logado
 def update(request, contact_id):
     contact = get_object_or_404(
         Contact, pk = contact_id, show = True
@@ -77,6 +79,7 @@ def update(request, contact_id):
         context 
     )
 
+@login_required(login_url='contact:login') # isso redireciona para o login se nao estiver logado
 def delete(request, contact_id):
     contact = get_object_or_404(
         Contact, pk = contact_id, show = True
